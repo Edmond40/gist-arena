@@ -15,8 +15,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<MainLayout/>}>
-          <Route path='home' element={<Home/>}/>
+        <Route path='/home' element={<MainLayout/>}>
+          <Route path='' element={<Home/>}/>
           <Route path='news-list' element={<NewsList/>}/>
           <Route path='news-detail/:id' element={<NewsDetail/>}/>
           <Route path='contact' element={<Contact/>}/>
