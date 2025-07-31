@@ -11,13 +11,13 @@ function Navbar() {
   return (
     <nav className="sticky top-0 relative z-50 flex justify-between items-center p-5 shadow-md bg-white">
       
-        <Link to="/home" className='flex items-center'>
+        <Link to="/" className='flex items-center'>
           <p className='text-xl font-bold text-gray-700'>Gist <span className='arena text-2xl'>Arena</span></p>
           <Rss size={25} className='text-yellow-500'/>
         </Link>
 
         <div className="md:flex gap-3 text-lg font-semibold hidden">
-          <Link to="/home">Home</Link>
+          <Link to="/">Home</Link>
           <Link to="/news-list">News</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
