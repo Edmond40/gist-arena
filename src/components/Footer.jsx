@@ -9,7 +9,7 @@ function Footer(){
         <div className="bg-black flex flex flex-col gap-4">
             <div className="p-10 lg:grid grid-cols-4 md:grid flex flex-col text-white gap-5">
                 <div>
-                    <Link to="/home" className='flex items-center'>
+                    <Link to="/" className='flex items-center'>
                         <p className='text-xl font-bold '>Gist Arena</p>
                         <Rss size={25} className='text-yellow-500'/>
                     </Link>
@@ -17,8 +17,8 @@ function Footer(){
                 </div>
 
                 {/* Links */}
-                <div className="flex flex-col text-center w-20">
-                    <Link to="/home" className="hover:text-gray-600 duration-300 hover:scale-110">Home</Link>
+                <div className="flex flex-col  w-20">
+                    <Link to="/" className="hover:text-gray-600 duration-300 hover:scale-110">Home</Link>
                     <Link to="/news-list" className="hover:text-gray-600 duration-300 hover:scale-110">News</Link>
                     <Link to="/about" className="hover:text-gray-600 duration-300 hover:scale-110">About</Link>
                     <Link to="/contact" className="hover:text-gray-600 duration-300 hover:scale-110">Contact</Link>
@@ -33,7 +33,7 @@ function Footer(){
                 </div>
 
                 {/* Social Media */}
-                <div className="flex justify-end items-center gap-5">
+                <div className="flex md:justify-end items-center gap-5">
                     <Link to="/">
                         <Instagram size={25} className="hover:text-yellow-500 hover:scale-110 duration-300"/>
                     </Link>

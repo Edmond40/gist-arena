@@ -1,45 +1,46 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Rss, User } from 'lucide-react'
+import { BellRing, MessageSquare, Rss, Youtube, } from 'lucide-react'
 
 
 function Navbar() {
-  const [IsUser, setIsUser] = useState(true)
-
-
 
   return (
-    <nav className="sticky top-0 relative z-50 flex justify-between items-center p-5 shadow-md bg-white">
-      
+    <nav className="fixed top-0  z-50 flex justify-between items-center p-5 shadow-md bg-white w-full">
         <Link to="/" className='flex items-center'>
           <p className='text-xl font-bold text-gray-700'>Gist <span className='arena text-2xl'>Arena</span></p>
           <Rss size={25} className='text-yellow-500'/>
         </Link>
 
         <div className="md:flex gap-3 text-lg font-semibold hidden">
-          <Link to="/">Home</Link>
-          <Link to="/news-list">News</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+            <Link to="/" className="navlink">
+                <p>Home</p>
+                <hr className='bg-yellow-400 w-4/5 mx-auto h-[2px] rounded-full border-none  duration-500'></hr>
+            </Link>
+            <Link to="/news-list" className="navlink">
+                <p>News</p>
+                <hr className='bg-yellow-400 w-4/5 mx-auto h-[2px] rounded-full border-none  duration-500'></hr>
+            </Link>
+            <Link to="/about" className="navlink">
+                <p>About</p>
+                <hr className='bg-yellow-400 w-4/5 mx-auto h-[2px] rounded-full border-none  duration-500'></hr>
+            </Link>
+            <Link to="/contact" className="navlink">
+                <p>Contact</p>
+                <hr className='bg-yellow-400 w-4/5 mx-auto h-[2px] rounded-full border-none  duration-500'></hr>
+            </Link>
         </div>
 
         <div className='flex gap-3 font-semibold text-gray-700'>
-            {
-                IsUser ? (
-                    <div className='group relative'>
-                        <User className='cursor-pointer' />
-                        <div className='scale-0 bg-gray-100 p-4 w-32 rounded-md flex flex-col group-hover:scale-110 group-opacity-1 duration-500 absolute top-8 right-2 font-medium text-base text-gray-500'>
-                            <Link to="/user-dashboard" className='cursor-pointer hover:text-gray-700 duration-300'>View Profile</Link>
-                            <button className='cursor-pointer hover:text-gray-700 duration-300 text-left'>Log Out</button>
-                        </div>
-                    </div>
-                ) : (
-                    <div>
-                        <Link to="/signup" className='cursor-pointer'>Sign Up</Link>
-                        <Link to="/login" className='cursor-pointer ml-2'>Sign In</Link>
-                    </div>
-                )
-            }
+            <Link to="/">
+              <MessageSquare size={25} className='hover:text-blue-400 hover:scale-110 duration-300 cursor-pointer'/>
+            </Link>
+            <Link to="/">
+              <BellRing size={25} className='hover:text-yellow-400 hover:scale-110 duration-300 cursor-pointer'/>
+            </Link>
+            <Link to="/">
+              <Youtube size={25} className='hover:text-red-500 hover:scale-110 duration-300 cursor-pointer'/>
+            </Link>
         </div>
     </nav>
   );

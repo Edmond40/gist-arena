@@ -10,6 +10,25 @@ body{
   font-family: "Berkshire Swash", serif;
 }
 
+.headline hr{
+  transform: translateX(0);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.headline:hover hr{
+  transform: translateX(100%);
+  opacity: 1;
+}
+
+.navlink hr{
+  scale: 0;
+}
+
+.navlink:hover hr{
+  scale: 1;
+}
+
 .trend{
   font-family: 'Times New Roman', Times, serif;
 }
@@ -48,4 +67,12 @@ body{
   font-family: "Libertinus Serif", serif;
   font-weight: 700;
   font-style: italic;
+}
+
+
+.bg-1{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }

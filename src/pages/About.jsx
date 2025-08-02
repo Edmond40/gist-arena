@@ -1,3 +1,4 @@
+import { ChevronUp } from 'lucide-react';
 import React from 'react';
 
 const teamMembers = [
@@ -83,18 +84,18 @@ const values = [
 
 function About() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
+    <div className="min-h-screen bg-gradient-to-b from-blue-300 to-yellow-400 " id='About'>
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagonal-striped-brick.png')] opacity-5"></div>
+        <div className="absolute inset-0 bg-[url('./assets/images/bb4.jpg')] bg-1 opacity-30"></div>
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="text-gray-900">About</span>{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-600">
-              Sandy's Updates
+            <span className="text-gray-800 trend">About</span>
+            <span >
+              <h1 className="text-gray-800 md:text-4xl font-bold">Gist <span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 arena'>Arena</span></h1>
             </span>
           </h1>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto mb-12">
+          <p className="text-xl libertinus-serif-semibold-italic text-gray-900 max-w-3xl mx-auto mb-12">
             Delivering accurate, timely, and impactful news with a commitment to truth and excellence in journalism.
           </p>
           <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
@@ -194,7 +195,7 @@ function About() {
             {teamMembers.map((member, index) => (
               <div 
                 key={index}
-                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1"
+                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-2 duration-500"
               >
                 <div className="relative h-64 overflow-hidden">
                   <img 
@@ -213,10 +214,7 @@ function About() {
                   <p className="text-gray-600 mb-4">{member.bio}</p>
                   <div className="flex space-x-4">
                     {['twitter', 'linkedin', 'mail'].map((social) => (
-                      <a 
-                        key={social}
-                        href={`#${social}`} 
-                        className="text-gray-400 hover:text-yellow-500 transition-colors"
+                      <a key={social} href={`#${social}`}  className="text-gray-400 hover:text-yellow-500 transition-colors"
                         aria-label={`${member.name}'s ${social}`}
                       >
                         <span className="sr-only">{social}</span>
@@ -262,6 +260,10 @@ function About() {
           </div>
         </div>
       </section>
+
+      <a href="#About" className="fixed text-white bottom-5 right-5 bg-blue-400 rounded-full hover:rotate-180 duration-300">
+        <ChevronUp size={30} className='text-white'/>
+      </a>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import WAR from '../assets/images/war.jpg'
+import { ChevronUp } from 'lucide-react';
 
 // Dummy data for now
 const news = [
@@ -23,7 +25,7 @@ const news = [
     id: 3,
     title: 'Global Economic Impact of War',
     content: `The ongoing Russia-Ukraine war has sent shockwaves through the global economy. Energy prices have surged as supply lines are disrupted, and food shortages are reported in several regions due to blocked exports. Economists warn of prolonged inflation and urge governments to seek alternative trade routes and stabilize markets.`,
-    image: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3fd8?auto=format&fit=crop&w=400&q=80',
+    image: WAR,
     category: 'Economy',
     date: 'July 26, 2025'
   },
@@ -52,8 +54,8 @@ function NewsDetail() {
   if (!article) return <div className="container"><h2>Article Not Found</h2></div>;
 
   return (
-    <div className="container">
-      <Link to="/news" style={{ color: '#1976d2', textDecoration: 'none', marginBottom: '1rem', display: 'inline-block' }}>&larr; Back to News</Link>
+    <div className="container" id='NewsDetails'>
+      <Link to="/news-list" style={{ color: '#1976d2', textDecoration: 'none', marginBottom: '1rem', display: 'inline-block' }}>&larr; Back to News</Link>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1.5rem' }}>
         <img src={article.image} alt={article.title} style={{ width: '100%', maxWidth: 520, borderRadius: 16, marginBottom: 16 }} />
         <div style={{ color: '#888', fontSize: '1rem', marginBottom: 8 }}>
@@ -63,6 +65,10 @@ function NewsDetail() {
         <h2 style={{ textAlign: 'center' }}>{article.title}</h2>
       </div>
       <p style={{ fontSize: '1.13rem', color: '#444', lineHeight: 1.7 }}>{article.content}</p>
+
+      <a href="#NewsDetails" className="fixed text-white bottom-5 right-5 bg-blue-400 rounded-full hover:rotate-180 duration-300">
+        <ChevronUp size={30} className='text-white'/>
+      </a>
     </div>
   );
 }
