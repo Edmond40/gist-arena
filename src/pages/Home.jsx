@@ -78,7 +78,7 @@ function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="flex md:flex-row flex-col justify-center w-full justify-between gap-4 md:h-[90vh]" id='Home'>
+      <section className="flex md:flex-row flex-col justify-center w-full justify-between gap-4 lg:h-[90vh]" id='Home'>
           <div className="text-center text-white flex flex-col gap-4 flex-1 relative overflow-hidden rounded-xl">
             <img src={BG1} alt="" className='h-full object-cover'/>
             <div className='flex flex-col absolute lg:top-72 md:top-40 top-20 bottom-0 left-0 right-0 p-5 inset-0 bg-gradient-to-t from-black/80 to-transparent'>
@@ -139,7 +139,7 @@ function Home() {
 
       {/* Category Filters */}
       <section className="bg-yellow-400 text-gray-700 font-semibold rounded-sm p-2">
-        <div className="md:flex justify-evenly gap-2 bg-yellow-400">
+        <div className="md:flex justify-evenly bg-yellow-400">
           {categories.map((category) => (
             <button
               key={category}
