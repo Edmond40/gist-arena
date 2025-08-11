@@ -18,11 +18,11 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-2">
             <span className="text-gray-100 trend">Contact</span>
-            <span >
-              <h1 className="text-gray-800 md:text-4xl font-bold">Gist <span className='text-5xl bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 arena'>Arena</span></h1>
+            <span className='flex justify-center gap-1'>
+              <h1 className="text-gray-800 md:text-4xl font-bold" data-aos="fade-left">Gist </h1><span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 arena' data-aos="fade-right">Arena</span>
             </span>
           </h1>
-          <p className="text-xl libertinus-serif-semibold-italic text-gray-900 max-w-3xl mx-auto mb-12">
+          <p className="text-xl libertinus-serif-semibold-italic text-gray-900 max-w-3xl mx-auto mb-12" data-aos="fade-down">
             We are ready to serve you with the rightful Insights and Entertainment news always
           </p>
         </div>
@@ -30,7 +30,7 @@ export default function Contact() {
 
       <section className='bg-white md:grid grid-cols-2 flex flex-col gap-5 py-16 md:px-10'>
         <div>
-          <div className='shadow-md p-8 flex flex-col gap-4'>
+          <div className='shadow-md p-8 flex flex-col gap-4' data-aos="fade-up">
             <h1 className='md:text-2xl text-gray-700 font-semibold'>Contact Information</h1>
             <div className='flex flex-col gap-4'>
               <div className='flex items-center gap-1'>
@@ -52,7 +52,8 @@ export default function Contact() {
             </div>
           </div>
         </div>
-        <div className='bg-white shadow-md flex flex-col gap-5'>
+
+        <div className='bg-white shadow-md flex flex-col gap-5' data-aos="fade-right">
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 p-5">
                 <div>
                     <label htmlFor="name">Name</label>
@@ -79,7 +80,7 @@ export default function Contact() {
         </div>
       </section>
 
-      <a href="#Contact" className="fixed text-white bottom-5 right-5 bg-blue-400 rounded-full hover:rotate-180 duration-300">
+      <a href="#Contact" className="fixed text-white bottom-5 right-5 bg-blue-400 z-10 rounded-full hover:rotate-180 duration-300">
         <ChevronUp size={30} className='text-white'/>
       </a>
     </div>

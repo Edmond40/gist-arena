@@ -91,16 +91,16 @@ function About() {
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             <span className="text-gray-800 trend">About</span>
-            <span >
-              <h1 className="text-gray-800 md:text-4xl font-bold">Gist <span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 arena'>Arena</span></h1>
+            <span className='flex justify-center gap-1'>
+              <h1 className="text-gray-800 md:text-4xl font-bold" data-aos="fade-left">Gist </h1><span className='bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 arena' data-aos="fade-right">Arena</span>
             </span>
           </h1>
-          <p className="text-xl libertinus-serif-semibold-italic text-gray-900 max-w-3xl mx-auto mb-12">
+          <p className="text-xl libertinus-serif-semibold-italic text-gray-900 max-w-3xl mx-auto mb-12 duration-500" data-aos="fade-down">
             Delivering accurate, timely, and impactful news with a commitment to truth and excellence in journalism.
           </p>
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto" data-aos="fade-left">
             <p className="text-lg text-gray-700 mb-6">
-              Founded in 2023, Sandy's Updates has quickly become a trusted source for millions of readers worldwide. 
+              Founded in 2023, Gist Arena has quickly become a trusted source for millions of readers worldwide. 
               Our team of dedicated journalists and technologists work together to bring you the stories that matter most.
             </p>
             <p className="text-lg text-gray-700">
@@ -115,8 +115,8 @@ function About() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Core Values</h2>
-            <div className="w-20 h-1 bg-yellow-500 mx-auto"></div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-right">Our Core Values</h2>
+            <div className="w-20 h-1 bg-yellow-500 mx-auto" data-aos="fade-left"></div>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -124,7 +124,7 @@ function About() {
               <div 
                 key={index}
                 className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100 hover:border-yellow-200"
-              >
+                data-aos="fade-right">
                 <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center text-2xl mb-4 mx-auto">
                   {value.icon}
                 </div>
@@ -140,8 +140,8 @@ function About() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Journey</h2>
-            <div className="w-20 h-1 bg-yellow-500 mx-auto"></div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-right">Our Journey</h2>
+            <div className="w-20 h-1 bg-yellow-500 mx-auto" data-aos="fade-left"></div>
           </div>
           
           <div className="relative">
@@ -151,8 +151,7 @@ function About() {
             {milestones.map((milestone, index) => (
               <div 
                 key={index}
-                className={`relative mb-12 md:flex ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-              >
+                className={`relative mb-12 md:flex ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`} data-aos="fade-right">
                 <div className={`md:w-5/12 px-4 md:px-8 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                   <div className="md:hidden w-16 h-1 bg-yellow-300 mb-4"></div>
                   <div className="inline-block bg-yellow-500 text-white text-sm font-semibold px-3 py-1 rounded-full mb-2">
@@ -184,19 +183,18 @@ function About() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-right">Meet Our Team</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto" data-aos="zoom-in">
               Passionate individuals dedicated to bringing you the most important stories
             </p>
-            <div className="w-20 h-1 bg-yellow-500 mx-auto mt-4"></div>
+            <div className="w-20 h-1 bg-yellow-500 mx-auto mt-4" data-aos="fade-left"></div>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {teamMembers.map((member, index) => (
               <div 
                 key={index}
-                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-2 duration-500"
-              >
+                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-2 duration-500" data-aos="fade-right">
                 <div className="relative h-64 overflow-hidden">
                   <img 
                     src={member.image} 
@@ -229,7 +227,7 @@ function About() {
             ))}
           </div>
           
-          <div className="mt-16 text-center">
+          <div className="mt-16 text-center" data-aos="zoom-in">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Join Our Team</h3>
             <p className="text-gray-600 max-w-2xl mx-auto mb-6">
               We're always looking for talented individuals who share our passion for journalism and technology.
@@ -252,16 +250,16 @@ function About() {
             <input 
               type="email" 
               placeholder="Your email address" 
-              className="flex-1 px-6 py-3 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="w-full border-2 border-gray-200 p-2 rounded-full focus:outline-none focus:border-yellow-500 duration-300 text-gray-100"
             />
-            <button className="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold py-3 px-8 rounded-full transition-colors">
+            <button className="bg-yellow-400 hover:bg-yellow-300 duration-300 text-gray-900 font-semibold py-3 px-8 rounded-full">
               Subscribe
             </button>
           </div>
         </div>
       </section>
 
-      <a href="#About" className="fixed text-white bottom-5 right-5 bg-blue-400 rounded-full hover:rotate-180 duration-300">
+      <a href="#About" className="fixed text-white bottom-5 right-5 bg-blue-400 z-10 rounded-full hover:rotate-180 duration-300">
         <ChevronUp size={30} className='text-white'/>
       </a>
     </div>

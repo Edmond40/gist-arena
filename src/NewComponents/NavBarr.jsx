@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BellRing, MessageSquare, Rss, Youtube, } from 'lucide-react'
+import { BellRing, MessageSquareText, Rss, Youtube, } from 'lucide-react'
 
 
 function Navbar() {
@@ -33,7 +33,7 @@ function Navbar() {
 
         <div className='flex gap-3 font-semibold text-gray-700'>
             <Link to="/">
-              <MessageSquare size={25} className='hover:text-blue-400 hover:scale-110 duration-300 cursor-pointer'/>
+              <MessageSquareText size={25} className='hover:text-blue-400 hover:scale-110 duration-300 cursor-pointer'/>
             </Link>
             <Link to="/">
               <BellRing size={25} className='hover:text-yellow-400 hover:scale-110 duration-300 cursor-pointer'/>
