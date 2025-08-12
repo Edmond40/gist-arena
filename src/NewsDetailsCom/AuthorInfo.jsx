@@ -23,7 +23,7 @@ const AuthorInfo = ({ article }) => {
   };
 
   return (
-    <div className="md:w-[75%] mx-auto mt-8 p-6 bg-gray-50 rounded-lg">
+    <div className="md:w-[80%] mx-auto mt-8 p-6 bg-gray-100 shadow-md rounded-lg">
       <div className="flex items-start gap-4">
         <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
           {article.author.split(' ').map(name => name[0]).join('')}

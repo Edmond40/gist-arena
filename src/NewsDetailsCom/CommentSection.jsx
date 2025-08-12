@@ -3,7 +3,7 @@ import { Heart } from 'lucide-react';
 
 const CommentSection = () => {
   return (
-    <div className="md:w-[75%] mx-auto mt-8">
+    <div className="md:w-[80%] mx-auto mt-8">
       <div className="flex items-center gap-2 mb-6">
         <h3 className="text-xl font-bold text-gray-800">Comments</h3>
         <span className="bg-gray-200 text-gray-600 px-2 py-1 rounded-full text-sm">12</span>
@@ -118,7 +118,7 @@ const CommentSection = () => {
       
       {/* Load More Comments */}
       <div className="text-center mt-6">
-        <button className="text-blue-600 hover:text-blue-800 font-medium">
+        <button className="text-blue-600 hover:text-blue-800 font-medium underline">
           Load More Comments
         </button>
       </div>

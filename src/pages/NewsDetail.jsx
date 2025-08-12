@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Trend1 from '../assets/images/rr1.jpg'
 import Trend2 from '../assets/images/rr2.jpg'
 import Trend3 from '../assets/images/rr4.jpg'
@@ -31,6 +31,7 @@ import TemaHabour from '../assets/images/temahabour.jpg'
 
 // Import all components
 import {ReadingProgressBar,SocialShareButtons,FontSizeControls,ArticleHeader,ArticleActions,AuthorInfo,CommentSection,EmailModal,AdZones,RelatedArticles,ArticleContent,BackToTop} from '../NewsDetailsCom';
+import { PanelLeftClose } from 'lucide-react';
 
 // Dummy data for now
 const news = [
@@ -376,7 +377,6 @@ function NewsDetail() {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(Math.floor(Math.random() * 100) + 50);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [fontSize, setFontSize] = useState(16);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [emailData, setEmailData] = useState({ to: '', from: '', message: '' });
@@ -471,11 +471,17 @@ function NewsDetail() {
   };
 
   return (
-    <div className={`flex md:flex-row gap-4 flex-col justify-between ${isDarkMode ? 'dark' : ''}`} id='NewsDetails'>
+    <div className={`flex md:flex-row gap-4 flex-col justify-between `} id='NewsDetails'>
       {/* Reading Progress Bar */}
       <ReadingProgressBar progress={readingProgress} />
 
       <div className='w-full'>
+
+        <Link to="/news-list" className='flex items-center gap-1 hover:translate-x-2 cursor-pointer duration-300'>
+          <PanelLeftClose size={25} className='text-yellow-500'/>
+          <p className='libertinus-serif-semibold'>Back</p>
+        </Link>
+
         {/* Social Share Buttons */}
         <SocialShareButtons 
           isOpen={isOpen}
@@ -496,7 +502,6 @@ function NewsDetail() {
           {/* Article Header */}
           <ArticleHeader 
             article={article}
-            isDarkMode={isDarkMode}
             description={description}
           />
           

@@ -1,35 +1,31 @@
 import { ChevronUp } from 'lucide-react';
 import React from 'react';
+import Micheal from '../assets/images/micheal.jpg'
+import Eddy from '../assets/images/eddy.jpg'
+import Sandy from '../assets/images/sandy.jpg'
 
 const teamMembers = [
   {
     name: 'Sandy Lee',
     role: 'Founder & Editor-in-Chief',
     bio: 'With over 15 years of experience in journalism, Sandy leads our editorial team with a passion for truth and compelling storytelling.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80',
+    image: Sandy,
     emoji: '👩‍💼'
   },
   {
-    name: 'Alex Kim',
-    role: 'Lead Developer',
-    bio: 'Tech enthusiast and problem solver, Alex ensures our platform delivers news with speed, reliability, and an exceptional user experience.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',
+    name: 'Micheal Oti',
+    role: 'Visual Editor',
+    bio: 'Creative director and visual storyteller, Marcus ensures our content is as visually compelling as it is informative.',
+    image: Micheal,
     emoji: '👨‍💻'
   },
   {
-    name: 'Priya Singh',
-    role: 'Senior Correspondent',
-    bio: 'Award-winning journalist with a keen eye for detail, Priya brings important stories to light with integrity and depth.',
-    image: 'https://images.unsplash.com/photo-1573496358961-3c23ee2bc5d9?w=400&auto=format&fit=crop&q=80',
+    name: 'Yhoung Doe',
+    role: 'Lead Developer',
+    bio: 'Tech enthusiast and problem solver, Alex ensures our platform delivers news with speed, reliability, and an exceptional user experience.',
+    image: Eddy,
     emoji: '📰'
   },
-  {
-    name: 'Marcus Chen',
-    role: 'Visual Editor',
-    bio: 'Creative director and visual storyteller, Marcus ensures our content is as visually compelling as it is informative.',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&auto=format&fit=crop&q=80',
-    emoji: '🎨'
-  }
 ];
 
 const milestones = [
@@ -190,16 +186,16 @@ function About() {
             <div className="w-20 h-1 bg-yellow-500 mx-auto mt-4" data-aos="fade-left"></div>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
               <div 
                 key={index}
-                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-2 duration-500" data-aos="fade-right">
+                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl duration-300" data-aos="fade-right">
                 <div className="relative h-64 overflow-hidden">
                   <img 
                     src={member.image} 
                     alt={member.name} 
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    className="w-full h-96 object-cover duration-500 hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                     <div>

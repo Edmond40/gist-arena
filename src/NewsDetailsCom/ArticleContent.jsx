@@ -124,7 +124,7 @@ const ArticleContent = ({ article, fontSize }) => {
   };
 
   return (
-    <div className="md:w-[75%] mx-auto" style={{ fontSize: `${fontSize}px` }}>
+    <div className="md:w-[85%] mx-auto" style={{ fontSize: `${fontSize}px` }}>
       {generateFullContent(article)}
     </div>
   );

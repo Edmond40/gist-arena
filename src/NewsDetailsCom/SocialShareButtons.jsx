@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Twitter, Linkedin, Youtube, Copy, Check, GripVertical } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, MessageCircle, Copy, Check, GripVertical, Youtube } from 'lucide-react';
 
 const SocialShareButtons = ({ isOpen, setIsOpen, article, copied, setCopied }) => {
   const shareUrl = window.location.href;
@@ -19,6 +19,10 @@ const SocialShareButtons = ({ isOpen, setIsOpen, article, copied, setCopied }) =
   
   const shareToWhatsApp = () => {
     window.open(`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
+  };
+  
+  const shareToYouTube = () => {
+    window.open(`https://www.youtube.com/upload?title=${encodeURIComponent(article.title)}&description=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
   };
   
   const copyToClipboard = async () => {
@@ -41,6 +45,9 @@ const SocialShareButtons = ({ isOpen, setIsOpen, article, copied, setCopied }) =
       <div className={`${isOpen ? 'translate-x-10' : 'scale-50'} absolute lg:top-50 left-0 md:top-60 top-50 duration-500`}>
         {isOpen && (
           <div className="w-7 flex flex-col gap-3">
+            <button onClick={shareToYouTube} title="Share on YouTube">
+              <Youtube size={40} className="bg-red-600 text-white hover:bg-red-700 hover:scale-110 duration-300 p-1"/>
+            </button>
             <button onClick={shareToFacebook} title="Share on Facebook">
               <Facebook size={40} className="bg-blue-600 text-white hover:bg-blue-700 hover:scale-110 duration-300 p-1"/>
             </button>
@@ -51,7 +58,7 @@ const SocialShareButtons = ({ isOpen, setIsOpen, article, copied, setCopied }) =
               <Linkedin size={40} className="bg-blue-700 text-white hover:bg-blue-800 hover:scale-110 duration-300 p-1"/>
             </button>
             <button onClick={shareToWhatsApp} title="Share on WhatsApp">
-              <Youtube size={40} className="bg-green-500 text-white hover:bg-green-600 hover:scale-110 duration-300 p-1"/>
+              <MessageCircle size={40} className="bg-green-500 text-white hover:bg-green-600 hover:scale-110 duration-300 p-1"/>
             </button>
             <button onClick={copyToClipboard} title="Copy link">
               {copied ? 
