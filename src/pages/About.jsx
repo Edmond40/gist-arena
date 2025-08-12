@@ -96,7 +96,7 @@ function About() {
           </p>
           <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto" data-aos="fade-left">
             <p className="text-lg text-gray-700 mb-6">
-              Founded in 2023, Gist Arena has quickly become a trusted source for millions of readers worldwide. 
+              Founded in 2025, Gist Arena has quickly become a trusted source for millions of readers worldwide. 
               Our team of dedicated journalists and technologists work together to bring you the stories that matter most.
             </p>
             <p className="text-lg text-gray-700">
