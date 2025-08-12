@@ -6,7 +6,7 @@ import Sandy from '../assets/images/sandy.jpg'
 
 const teamMembers = [
   {
-    name: 'Sandy Lee',
+    name: 'Sandy Asante',
     role: 'Founder & Editor-in-Chief',
     bio: 'With over 15 years of experience in journalism, Sandy leads our editorial team with a passion for truth and compelling storytelling.',
     image: Sandy,
