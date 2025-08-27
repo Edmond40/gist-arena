@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  HIDDEN
+  SPAM
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  name         String?
+  passwordHash String
+  role         Role      @default(USER)
+  avatarUrl    String?
+  bio          String?
+  twitter      String?
+  facebook     String?
+  instagram    String?
+  linkedin     String?
+  website      String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  posts     Post[]
+  comments  Comment[]
+  likes     Like[]
+  bookmarks Bookmark[]
+  // Back-relation for Comment.moderatedBy
+  moderatedComments Comment[] @relation("CommentModeratedBy")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts Post[]
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  slug String @unique
+
+  posts PostTag[]
+}
+
+model Post {
+  id          Int        @id @default(autoincrement())
+  title       String
+  slug        String     @unique
+  content     String     @db.LongText
+  published   Boolean    @default(false)
+  authorId    Int
+  categoryId  Int?
+  summary     String?    @db.Text
+  heroImageUrl String?
+  minutesRead Int?
+  viewCount   Int        @default(0)
+  shareCount  Int        @default(0)
+  publishedAt DateTime?
+  isTrending  Boolean    @default(false)
+  trendingScore Int      @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  author   User      @relation(fields: [authorId], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
+  tags     PostTag[]
+  comments Comment[]
+  likes    Like[]
+  media    Media[]
+  bookmarks Bookmark[]
+}
+
+model PostTag {
+  postId Int
+  tagId  Int
+
+  post Post @relation(fields: [postId], references: [id])
+  tag  Tag  @relation(fields: [tagId], references: [id])
+
+  @@id([postId, tagId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  authorId  Int?
+  postId    Int
+  parentId  Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  editedAt  DateTime?
+  guestName  String?
+  guestEmail String?
+
+  // Moderation fields
+  status          CommentStatus @default(PENDING)
+  moderatedById   Int?
+  moderatedAt     DateTime?
+  moderationReason String?
+  deletedAt       DateTime?
+  isPinned        Boolean @default(false)
+
+  moderatedBy User? @relation("CommentModeratedBy", fields: [moderatedById], references: [id])
+
+  author User? @relation(fields: [authorId], references: [id])
+  post   Post @relation(fields: [postId], references: [id])
+  parent Comment? @relation("CommentToComment", fields: [parentId], references: [id])
+  replies Comment[] @relation("CommentToComment")
+
+  @@index([postId, status, createdAt])
+}
+
+model Like {
+  userId   Int
+  postId   Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+
+  @@id([userId, postId])
+}
+
+model Bookmark {
+  userId    Int
+  postId    Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+
+  @@id([userId, postId])
+}
+
+model Media {
+  id        Int      @id @default(autoincrement())
+  url       String
+  type      String
+  postId    Int
+  createdAt DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id])
+}

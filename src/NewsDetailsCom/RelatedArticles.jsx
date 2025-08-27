@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const RelatedArticles = ({ news, article, relatedFilter, setRelatedFilter }) => {
+const RelatedArticles = ({ newsDetails = [], mostPopular = [], article, relatedFilter, setRelatedFilter }) => {
   return (
     <div className='flex flex-col gap-2 md:pr-0 pr-5' data-aos="fade-right">
       <div className='flex items-center gap-1' data-aos="slide-up">
@@ -26,7 +26,7 @@ const RelatedArticles = ({ news, article, relatedFilter, setRelatedFilter }) => 
       </div>
       
       <div className='flex flex-col gap-5 max-h-96 overflow-y-auto py-4'>
-        {news
+        {newsDetails
           .filter(item => item.id !== article.id) // Exclude current article
           .filter(item => {
             if (relatedFilter === 'all') return true;
@@ -55,15 +55,22 @@ const RelatedArticles = ({ news, article, relatedFilter, setRelatedFilter }) => 
           <h2 className='trend font-bold text-lg'>Most Popular</h2>
         </div>
         <div className='flex flex-col gap-3'>
-          {news.slice(0, 4).map((item, index) => (
+          {mostPopular.slice(0, 5).map((item, index) => (
             <Link to={`/news-detail/${item.id}`} key={index} className='flex gap-3 p-3 rounded bg-white shadow-sm hover:shadow-md transition-shadow'>
-              <img src={item.image} alt="" className='w-12 h-12 rounded object-cover'/>
+              {item.image ? (
+                <img src={item.image} alt="" className='w-12 h-12 rounded object-cover'/>
+              ) : (
+                <div className='w-12 h-12 rounded bg-gray-200 flex items-center justify-center text-xs text-gray-500'>No img</div>
+              )}
               <div className="flex-1 min-w-0">
                 <h3 className="font-medium text-sm text-gray-800 line-clamp-2">{item.title}</h3>
-                <p className="text-xs text-gray-500 mt-1">{item.date}</p>
+                <p className="text-xs text-gray-500 mt-1">{item.category}{item.viewCount !== undefined ? ` • ${item.viewCount} views` : ''}</p>
               </div>
             </Link>
           ))}
+          {mostPopular.length === 0 && (
+            <div className='text-xs text-gray-500 px-2 py-1'>No popular posts yet.</div>
+          )}
         </div>
       </div>
     </div>

@@ -1,34 +1,47 @@
 import React from 'react';
 import { Facebook, Twitter, Linkedin, MessageCircle, Copy, Check, GripVertical, Youtube } from 'lucide-react';
+import { PostsAPI } from '../lib/api';
 
-const SocialShareButtons = ({ isOpen, setIsOpen, article, copied, setCopied }) => {
+const SocialShareButtons = ({ isOpen, setIsOpen, article, copied, setCopied, onShared }) => {
   const shareUrl = window.location.href;
   const shareText = `${article.title} - Read more on Gist Arena`;
   
+  const notifyShare = async () => {
+    if (!article?.id) return;
+    try { await PostsAPI.share(article.id); } catch { void 0; }
+    try { if (typeof onShared === 'function') onShared(); } catch { /* noop */ }
+  };
+
   const shareToFacebook = () => {
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+    notifyShare();
   };
   
   const shareToTwitter = () => {
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+    notifyShare();
   };
   
   const shareToLinkedIn = () => {
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+    notifyShare();
   };
   
   const shareToWhatsApp = () => {
     window.open(`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
+    notifyShare();
   };
   
   const shareToYouTube = () => {
     window.open(`https://www.youtube.com/upload?title=${encodeURIComponent(article.title)}&description=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
+    notifyShare();
   };
   
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
+      notifyShare();
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy: ', err);

@@ -1,341 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Trend1 from '../assets/images/rr1.jpg'
-import Trend2 from '../assets/images/rr2.jpg'
-import Trend3 from '../assets/images/rr4.jpg'
-import Trend4 from '../assets/images/rr3.jpg'
-import Trend5 from '../assets/images/rr5.jpg'
-import Paliament from '../assets/images/ghanapaliament.jpg'
-import Cocoa from '../assets/images/cocoa.jpg'
-import Startup from '../assets/images/startups.jpg'
-import GhanaUN from '../assets/images/ghanaun.jpg'
-import Vacen from '../assets/images/vacen.jpg'
-import Satellite from '../assets/images/sateliite.webp'
-import YellowCorn from '../assets/images/yellowcorn.jpg'
-import CannesNight from '../assets/images/cannesnight.jpg'
-import BlackStars from '../assets/images/blackstars.jpg'
-import Hospital from '../assets/images/hospital.jpg'
-import BOG from '../assets/images/BoGslashes.webp'
-import AfricaSubmit from '../assets/images/africasubmit.jpg'
-import GhanaUK from '../assets/images/GhanaUKtradedeal.jpeg'
-import Insurance from '../assets/images/insurance.jpeg'
-import AItool from '../assets/images/aitool.webp'
-import Afrocella from '../assets/images/afrochilla.jpg'
-import Asamoah from '../assets/images/asamoahgyan.webp'
-import Research from '../assets/images/research.png'
-import Biometric from '../assets/images/biometric.jpg'
-import TemaHabour from '../assets/images/temahabour.jpg'
-
-
-
-
-// Import all components
 import {ReadingProgressBar,SocialShareButtons,FontSizeControls,ArticleHeader,ArticleActions,AuthorInfo,CommentSection,EmailModal,AdZones,RelatedArticles,ArticleContent,BackToTop} from '../NewsDetailsCom';
 import { PanelLeftClose } from 'lucide-react';
-
-// Dummy data for now
-const news = [
-    {
-    id: 1,
-    title: 'Russia-Ukraine War: Latest Developments',
-    summary: 'Russia-Ukraine war_ List of key events, day 328 _ Russia-Ukraine war News',
-    image: Trend1, // war, soldiers
-    category: 'World',
-    date: 'August 05, 2025',
-    time: '3:16 PM',
-    day: 'Monday',
-    author:'By Daleli Doe',
-    minutesRead: '3 min read'
-  },
-  {
-    id: 2,
-    title: 'Nana Kwame Bediako says Ghana cannot digitalise without industrialising first',
-    summary: 'The Chief of the Bediako Royal Family, Nana Kwame Bediako, has said Ghana cannot digitalise without industrialising first.',
-    image: Trend2, // NATO, flags
-    category: 'Politics',
-    date: 'August 1, 2025',
-    time: '12:00 PM',
-    day: 'Monday',
-    author:'By Aboki Frimps',
-    minutesRead: '5 min read'
-  },
-  {
-    id: 3,
-    title: 'Ghana\'s digitalisation drive: A look at the challenges and opportunities',
-    summary: 'Ghana\'s digitalisation drive: A look at the challenges and opportunities',
-    image: Trend3, // economy, charts
-    category: 'Economy',
-    date: 'July 31, 2025',
-    time: '8:20 PM',
-    day: 'Friday',
-    author:'By Akiti Sandy',
-    minutesRead: '9 min read'
-  },
-  {
-    id: 4,
-    title: 'You have the support of parliament; aim for the trophy at the World Cup – Alban Bagbin charges…',
-    summary: 'The Speaker of Parliament, Alban Bagbin, has charged the Black Stars to aim for the trophy at the World Cup in Qatar.',
-    image: Trend4, // refugees, aid
-    category: 'World',
-    date: 'June 24, 2025',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 5,
-    title: 'UN Calls for Ceasefire',
-    summary: 'UK on \'high alert\' as Russia \'sends ballistic missiles\' to Ukraine',
-    image: Trend5, // UN, peace
-    category: 'Politics',
-    date: 'July 12, 2025',
-    time: '9:50 AM',
-    day: 'Monday',
-    author:'By Daily Bread',
-    minutesRead: '5 min read'
-  },
-  {
-    id: 6,
-    title: "Ghana's Parliament Debates New Electoral Reforms",
-    summary: "Lawmakers in Ghana are considering sweeping changes to the country's electoral laws ahead of the 2024 elections.",
-    image: Paliament,
-    category: 'Politics',
-    date: '2 hours ago',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 7,
-    title: "Ghana's Cocoa Exports Hit Record High",
-    summary: "Ghana's cocoa industry sees a surge in exports, boosting the nation's economy.",
-    image: Cocoa,
-    category: 'Economy',
-    date: '1 hour ago',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 8,
-    title: "Startups in Accra Attract International Investors",
-    summary: "Tech startups in Ghana's capital are drawing attention from global venture capitalists.",
-    image: Startup,
-    category: 'Business',
-    date: '30 minutes ago',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 9,
-    title: "Ghana Elected to UN Security Council",
-    summary: "Ghana secures a seat on the United Nations Security Council, representing Africa.",
-    image: GhanaUN,
-    category: 'World',
-    date: 'Just now',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 10,
-    title: "Ghana Launches Nationwide Malaria Vaccination",
-    summary: "The government of Ghana has started a nationwide campaign to vaccinate children against malaria.",
-    image: Vacen,
-    category: 'Health',
-    date: '5 minutes ago',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 11,
-    title: "Ghana Launches First Satellite into Space",
-    summary: "Ghana has successfully launched its first satellite, marking a major milestone in the nation's technological advancement.",
-    image: Satellite,
-    category: 'Technology',
-    date: '10 minutes ago',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 12,
-    title: "Ghanaian Scientists Develop New Crop Disease-Resistant Maize",
-    summary: "A team of Ghanaian scientists has developed a new strain of maize resistant to common crop diseases.",
-    image: YellowCorn,
-    category: 'Science',
-    date: '20 minutes ago',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 13,
-    title: "Ghanaian Film Wins Award at Cannes",
-    summary: "A Ghanaian film has taken home the top prize at the Cannes Film Festival, shining a spotlight on the country's creative industry.",
-    image: CannesNight,
-    category: 'Entertainment',
-    date: '1 hour ago',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 14,
-    title: "Black Stars Qualify for AFCON Finals",
-    summary: "Ghana's national football team, the Black Stars, have qualified for the Africa Cup of Nations finals.",
-    image: BlackStars,
-    category: 'Sports',
-    date: 'Just now',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 15,
-    title: "Ghana Opens New State-of-the-Art Hospital in Accra",
-    summary: "A new state-of-the-art hospital has been inaugurated in Accra to improve healthcare delivery.",
-    image: Hospital,
-    category: 'Health',
-    date: '5 minutes ago',
-    time: '11:00 AM',
-    day: 'Tuesday',
-    author:'By Eddy Kay',
-    minutesRead: '15 min read'
-  },
-  {
-    id: 16,
-    title: "BoG Cuts Policy Rate to Spur Growth",
-    summary: "The Bank of Ghana has announced a policy rate cut aimed at stimulating lending and growth.",
-    image: BOG,
-    category: 'Economy',
-    date: '2 hours ago',
-    time: '12:10 PM',
-    day: 'Tuesday',
-    author:'By Ama K.',
-    minutesRead: '4 min read'
-  },
-  {
-    id: 17,
-    title: "Accra FinTech Summit Attracts 5,000 Attendees",
-    summary: "Founders and investors converged in Accra to discuss the future of digital payments in Africa.",
-    image: AfricaSubmit,
-    category: 'Business',
-    date: '1 hour ago',
-    time: '1:00 PM',
-    day: 'Tuesday',
-    author:'By Kofi A.',
-    minutesRead: '6 min read'
-  },
-  {
-    id: 18,
-    title: "Ghana Signs New Bilateral Trade Deal with EU",
-    summary: "The agreement is expected to boost exports and create new opportunities for SMEs.",
-    image: GhanaUK,
-    category: 'World',
-    date: 'Just now',
-    time: '1:15 PM',
-    day: 'Tuesday',
-    author:'By Efua D.',
-    minutesRead: '3 min read'
-  },
-  {
-    id: 19,
-    title: "NHIS Rolls Out Digital Membership Cards Nationwide",
-    summary: "Ghana's National Health Insurance Scheme has launched digital cards to streamline access to care.",
-    image: Insurance,
-    category: 'Health',
-    date: '25 minutes ago',
-    time: '12:50 PM',
-    day: 'Tuesday',
-    author:'By Nana A.',
-    minutesRead: '5 min read'
-  },
-  {
-    id: 20,
-    title: "Kumasi Startup Unveils AI Tool for Smart Farming",
-    summary: "An AI-powered platform promises to boost yields for smallholder farmers across Ghana.",
-    image: AItool,
-    category: 'Technology',
-    date: '40 minutes ago',
-    time: '12:35 PM',
-    day: 'Tuesday',
-    author:'By Yaw B.',
-    minutesRead: '7 min read'
-  },
-  {
-    id: 21,
-    title: "Afrochella Returns to Accra with Global Stars",
-    summary: "The popular music and culture festival announces its biggest lineup yet.",
-    image: Afrocella,
-    category: 'Entertainment',
-    date: 'Today',
-    time: '10:00 AM',
-    day: 'Tuesday',
-    author:'By Akosua M.',
-    minutesRead: '4 min read'
-  },
-  {
-    id: 22,
-    title: "Asamoah Gyan Launches Youth Football Academy",
-    summary: "The Black Stars legend opens a new academy to nurture young talent.",
-    image: Asamoah,
-    category: 'Sports',
-    date: 'Today',
-    time: '9:40 AM',
-    day: 'Tuesday',
-    author:'By K. Boateng',
-    minutesRead: '3 min read'
-  },
-  {
-    id: 23,
-    title: "UG Researchers Map Coastal Erosion Hotspots",
-    summary: "New scientific study highlights vulnerable communities along Ghana's coast.",
-    image: Research,
-    category: 'Science',
-    date: '3 hours ago',
-    time: '10:20 AM',
-    day: 'Tuesday',
-    author:'By E. Quartey',
-    minutesRead: '8 min read'
-  },
-  {
-    id: 24,
-    title: "EC Unveils Biometric Voter Registration Upgrade",
-    summary: "The Electoral Commission introduces new features to improve voter verification.",
-    image: Biometric,
-    category: 'Politics',
-    date: '2 hours ago',
-    time: '11:15 AM',
-    day: 'Tuesday',
-    author:'By J. Mensah',
-    minutesRead: '5 min read'
-  },
-  {
-    id: 25,
-    title: "Tema Port Expansion Boosts Cargo Capacity",
-    summary: "Upgrades at Tema Port are set to reduce turnaround time for shipments.",
-    image: TemaHabour,
-    category: 'Business',
-    date: '1 hour ago',
-    time: '12:05 PM',
-    day: 'Tuesday',
-    author:'By L. Tetteh',
-    minutesRead: '6 min read'
-  },
-];
+import { PostsAPI, BookmarksAPI, LikesAPI } from '../lib/api';
 
 function generateDescription(article) {
   const base = article.summary || '';
@@ -365,29 +32,260 @@ function generateDescription(article) {
   }
 }
 
+function mapPostToArticle(post) {
+  if (!post) return null;
+  const dt = post.publishedAt || post.createdAt;
+  const d = dt ? new Date(dt) : null;
+  const day = d ? d.toLocaleDateString(undefined, { weekday: 'long' }) : '';
+  const date = d ? d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+  const time = d ? d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : '';
+  const minutesRead = post.minutesRead || Math.max(1, Math.round((post.content?.split(/\s+/).length || 200) / 200));
+  return {
+    id: post.id,
+    title: post.title,
+    summary: post.summary || '',
+    category: post.category?.name || '',
+    date,
+    time,
+    day,
+    image: post.heroImageUrl || '',
+    author: post.author?.name || 'Staff Writer',
+    authorBio: post.author?.bio || '',
+    authorAvatar: post.author?.avatarUrl || '',
+    socials: {
+      twitter: post.author?.twitter || '',
+      facebook: post.author?.facebook || '',
+      instagram: post.author?.instagram || '',
+      linkedin: post.author?.linkedin || '',
+      website: post.author?.website || '',
+    },
+    content: post.content || '',
+    minutesRead,
+    shareCount: post.shareCount || 0,
+    updatedAt: post.updatedAt || dt,
+  };
+}
+
 function NewsDetail() {
   const { id } = useParams();
-  const article = news.find(item => item.id === Number(id));
+  const [article, setArticle] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
 
-  // State management
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [readingProgress, setReadingProgress] = useState(0);
   const [relatedFilter, setRelatedFilter] = useState('all');
+  const [relatedArticles, setRelatedArticles] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [likeCount, setLikeCount] = useState(Math.floor(Math.random() * 100) + 50);
+  const [likeCount, setLikeCount] = useState(0);
   const [fontSize, setFontSize] = useState(16);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [emailData, setEmailData] = useState({ to: '', from: '', message: '' });
-  const [viewCount, setViewCount] = useState(Math.floor(Math.random() * 5000) + 1000);
-  
-  if (!article) return <div className=""><h2>Article Not Found</h2></div>;
+  const [viewCount, setViewCount] = useState(0);
+  const [shareCount, setShareCount] = useState(0);
+  const [mostPopular, setMostPopular] = useState([]);
+  const description = article?.description || generateDescription(article || {});
 
-  const description = article.description || generateDescription(article);
-  
+  // Wrap setter to sync bookmark state to backend
+  const handleSetBookmarked = (updater) => {
+    setIsBookmarked((prev) => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      const pid = article?.id || Number(id);
+      if (pid) {
+        if (next) {
+          BookmarksAPI.add(pid).catch(() => {});
+        } else {
+          BookmarksAPI.remove(pid).catch(() => {});
+        }
+      }
+      return next;
+    });
+  };
 
+  // Sync like state and count with backend
+  const handleSetLiked = (updater) => {
+    setIsLiked((prev) => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      const pid = article?.id || Number(id);
+      (async () => {
+        try {
+          if (!pid) return;
+          if (next) {
+            await LikesAPI.like(pid);
+          } else {
+            await LikesAPI.unlike(pid);
+          }
+          const res = await LikesAPI.count(pid);
+          if (typeof res?.count === 'number') setLikeCount(res.count);
+        } catch {
+          // ignore like errors
+        }
+      })();
+      return next;
+    });
+  };
+
+  // Load article from backend
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      setLoadError('');
+      try {
+        const post = await PostsAPI.get(Number(id));
+        if (!cancelled && post) {
+          setArticle(mapPostToArticle(post));
+          if (typeof post.viewCount === 'number') setViewCount(post.viewCount);
+          if (typeof post.shareCount === 'number') setShareCount(post.shareCount);
+          setLoading(false);
+          return;
+        }
+      } catch {
+        // if not found on backend
+        if (!cancelled) {
+          setLoadError('Article not found');
+          setLoading(false);
+        }
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [id]);
+
+  // Load initial like count
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const pid = Number(id);
+        if (!pid) return;
+        const res = await LikesAPI.count(pid);
+        if (!cancelled && typeof res?.count === 'number') setLikeCount(res.count);
+      } catch {
+        // ignore
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [id]);
+
+  // Load related articles based on category once main article is loaded
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      if (!article?.category) {
+        setRelatedArticles([]);
+        return;
+      }
+      try {
+        const posts = await PostsAPI.list({ published: true, sortBy: 'publishedAt', order: 'desc' });
+        if (cancelled) return;
+        const items = (posts || [])
+          .filter(p => (p.id !== article.id) && ((p.category?.name || '') === article.category))
+          .slice(0, 6)
+          .map(p => ({
+            id: p.id,
+            title: p.title,
+            summary: p.summary || '',
+            category: p.category?.name || '',
+            date: p.publishedAt || p.createdAt,
+            image: p.heroImageUrl || '',
+            author: p.author?.name || 'Staff Writer',
+            content: p.content || '',
+          }));
+        setRelatedArticles(items);
+      } catch {
+        setRelatedArticles([]);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [article?.id, article?.category]);
+
+  // Load most popular articles (by viewCount)
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const posts = await PostsAPI.list({ published: true, sortBy: 'viewCount', order: 'desc' });
+        if (cancelled) return;
+        const items = (posts || [])
+          .slice(0, 5)
+          .map(p => ({
+            id: p.id,
+            title: p.title,
+            summary: p.summary || '',
+            category: p.category?.name || '',
+            date: p.publishedAt || p.createdAt,
+            image: p.heroImageUrl || '',
+            author: p.author?.name || 'Staff Writer',
+            content: p.content || '',
+            viewCount: p.viewCount || 0,
+          }));
+        setMostPopular(items);
+      } catch {
+        setMostPopular([]);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  // Load initial bookmark state for this post (if authenticated)
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        if (!id) return;
+        const list = await BookmarksAPI.list();
+        if (cancelled) return;
+        const pid = Number(id);
+        const exists = Array.isArray(list) && list.some((b) => (b.postId === pid) || (b.post?.id === pid));
+        setIsBookmarked(!!exists);
+      } catch {
+        // ignore if unauthenticated or API fails
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [id]);
   
+  // Increment views only after real engagement (visible tab, 20% scroll, ~8s dwell), at most once per 24h per post
+  React.useEffect(() => {
+    if (!id) return;
+    let cancelled = false;
+    let timer = null;
+    const key = `viewed_post_${id}`; // stores timestamp of last counted view
+
+    const trySchedule = () => {
+      if (cancelled) return;
+      const lastTs = Number(localStorage.getItem(key) || '0');
+      if (lastTs && (Date.now() - lastTs) < 24 * 60 * 60 * 1000) return; // already counted in last 24h
+      if (document.visibilityState !== 'visible') return; // tab must be visible
+      if (readingProgress < 20) return; // require deeper engagement
+      if (timer) return; // already scheduled
+      timer = setTimeout(async () => {
+        try {
+          const res = await PostsAPI.incrementViews(Number(id));
+          if (!cancelled && res?.viewCount !== undefined) setViewCount(res.viewCount);
+          localStorage.setItem(key, String(Date.now()));
+        } catch {
+          // ignore failures
+        }
+      }, 8000);
+    };
+
+    // Attempt immediately in case conditions already met
+    trySchedule();
+
+    // Visibility changes can satisfy conditions later
+    const onVisibility = () => trySchedule();
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [id, readingProgress]);
+
   // Reading progress effect
   React.useEffect(() => {
     const handleScroll = () => {
@@ -442,7 +340,7 @@ function NewsDetail() {
           <div class="content">
             ${article.summary}<br><br>
             ${description}<br><br>
-            [Full article content would be included here]
+            ${article.content || ''}
           </div>
           <div class="author">
             <strong>Author:</strong> ${article.author}<br>
@@ -470,6 +368,10 @@ function NewsDetail() {
     setEmailData({ to: '', from: '', message: '' });
   };
 
+  if (loading) return <div>Loading article...</div>;
+  if (loadError) return <div className="text-red-600">{loadError}</div>;
+  if (!article) return <div className=""><h2>Article Not Found</h2></div>;
+
   return (
     <div className={`flex md:flex-row gap-4 flex-col justify-between `} id='NewsDetails'>
       {/* Reading Progress Bar */}
@@ -477,7 +379,7 @@ function NewsDetail() {
 
       <div className='w-full'>
 
-        <Link to="/news-list" className='flex items-center gap-1 hover:translate-x-2 cursor-pointer duration-300'>
+        <Link to="/news-list" className='flex items-center gap-1 hover:translate-x-2 cursor-pointer duration-300 w-18'>
           <PanelLeftClose size={25} className='text-yellow-500'/>
           <p className='libertinus-serif-semibold'>Back</p>
         </Link>
@@ -489,6 +391,15 @@ function NewsDetail() {
           article={article}
           copied={copied}
           setCopied={setCopied}
+          onShared={async () => {
+            // Optimistically increment
+            setShareCount((n) => n + 1);
+            // Best-effort refresh from backend
+            try {
+              const latest = await PostsAPI.get(Number(id));
+              if (typeof latest?.shareCount === 'number') setShareCount(latest.shareCount);
+            } catch { /* ignore */ }
+          }}
         />
 
         {/* Font Size Controls */}
@@ -508,15 +419,16 @@ function NewsDetail() {
           {/* Article Actions */}
           <ArticleActions 
             isLiked={isLiked}
-            setIsLiked={setIsLiked}
+            setIsLiked={handleSetLiked}
             likeCount={likeCount}
             setLikeCount={setLikeCount}
             isBookmarked={isBookmarked}
-            setIsBookmarked={setIsBookmarked}
+            setIsBookmarked={handleSetBookmarked}
             handlePrint={handlePrint}
             setShowEmailModal={setShowEmailModal}
             viewCount={viewCount}
             article={article}
+            shareCount={shareCount}
           />
           
           {/* Article Content */}
@@ -532,16 +444,17 @@ function NewsDetail() {
           <AuthorInfo article={article} />
           
           {/* Comment Section */}
-          <CommentSection />
+          <CommentSection postId={article.id} />
         </div>
 
         {/* Back to Top */}
         <BackToTop />
       </div>
       
-      {/* Related Articles */}
+      {/* Related Articles + Most Popular */}
       <RelatedArticles 
-        news={news}
+        newsDetails={relatedArticles}
+        mostPopular={mostPopular}
         article={article}
         relatedFilter={relatedFilter}
         setRelatedFilter={setRelatedFilter}

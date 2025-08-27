@@ -11,7 +11,8 @@ const ArticleActions = ({
   handlePrint, 
   setShowEmailModal, 
   viewCount, 
-  article 
+  article,
+  shareCount,
 }) => {
   const handleLike = () => {
     setIsLiked(!isLiked);
@@ -21,6 +22,14 @@ const ArticleActions = ({
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
   };
+
+  const formattedUpdated = React.useMemo(() => {
+    try {
+      return article?.updatedAt ? new Date(article.updatedAt).toLocaleString() : '';
+    } catch {
+      return '';
+    }
+  }, [article?.updatedAt]);
 
   return (
     <>
@@ -75,11 +84,11 @@ const ArticleActions = ({
         </div>
         <div className="flex items-center gap-1">
           <Share2 size={16} />
-          <span>Shared {Math.floor(Math.random() * 200) + 50} times</span>
+          <span>Shared {(shareCount ?? article?.shareCount ?? 0)} times</span>
         </div>
         <div className="flex items-center gap-1">
           <Clock size={16} />
-          <span>Updated {article.date}</span>
+          <span>Updated {formattedUpdated || article?.date}</span>
         </div>
       </div>
     </>

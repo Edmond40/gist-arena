@@ -8,21 +8,21 @@ const teamMembers = [
   {
     name: 'Sandra Asante',
     role: 'Founder & Editor-in-Chief',
-    bio: 'With over 15 years of experience in journalism, Sandy leads our editorial team with a passion for truth and compelling storytelling.',
+    bio: 'With over 15 years of experience in journalism, Sandra leads our editorial team with a passion for truth and compelling storytelling.',
     image: Sandy,
     emoji: '👩‍💼'
   },
   {
     name: 'Micheal Oti',
     role: 'Visual Editor',
-    bio: 'Creative director and visual storyteller, Marcus ensures our content is as visually compelling as it is informative.',
+    bio: 'Creative director and visual storyteller, Micheal ensures our content is as visually compelling as it is informative.',
     image: Micheal,
     emoji: '👨‍💻'
   },
   {
     name: 'Yhoung Doe',
     role: 'Lead Developer',
-    bio: 'Tech enthusiast and problem solver, Alex ensures our platform delivers news with speed, reliability, and an exceptional user experience.',
+    bio: 'Tech enthusiast and problem solver, Yhoung ensures our platform delivers news with speed, reliability, and an exceptional user experience.',
     image: Eddy,
     emoji: '📰'
   },

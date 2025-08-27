@@ -1,0 +1,1 @@
+-- No-op: Bookmark and post columns already exist in baseline migration.
