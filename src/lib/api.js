@@ -1,6 +1,9 @@
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? '/api/v1'
-  : 'https://gist-arena-production.up.railway.app/api/v1';
+// For local development, use relative path which will be proxied by Vite
+// For production, use the full URL if it's set in environment variables, otherwise fall back to relative
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? '/api/v1' 
+    : 'https://gist-arena-production.up.railway.app/api/v1');
 
 function getToken() {
   return localStorage.getItem('token');
@@ -8,21 +11,42 @@ function getToken() {
 
 export async function api(path, { method = 'GET', body, headers, skipAuth } = {}) {
   const token = getToken();
-  const res = await fetch(`${API_BASE}${path}`, {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token && !skipAuth ? { Authorization: `Bearer ${token}` } : {}),
-      ...(headers || {}),
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
-  if (!res.ok) {
-    const msg = await res.text();
-    throw new Error(msg || `API error ${res.status}`);
+  const url = `${API_BASE}${path}`;
+  
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token && !skipAuth ? { Authorization: `Bearer ${token}` } : {}),
+        ...(headers || {}),
+      },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      const errorMessage = errorData.message || res.statusText || `API error ${res.status}`;
+      console.error(`API Error (${res.status}):`, { 
+        url, 
+        status: res.status, 
+        error: errorMessage,
+        response: errorData 
+      });
+      throw new Error(errorMessage);
+    }
+
+    const contentType = res.headers.get('content-type') || '';
+    return contentType.includes('application/json') ? res.json() : res.text();
+  } catch (error) {
+    console.error('API Request Failed:', {
+      url,
+      method,
+      error: error.message,
+      stack: error.stack
+    });
+    throw error;
   }
-  const ct = res.headers.get('content-type') || '';
-  return ct.includes('application/json') ? res.json() : res.text();
 }
 
 export const AuthAPI = {
