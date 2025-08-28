@@ -1,4 +1,6 @@
-const API_BASE = '/api/v1';
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? '/api/v1'
+  : 'https://gist-arena-production.up.railway.app/api/v1';
 
 function getToken() {
   return localStorage.getItem('token');
