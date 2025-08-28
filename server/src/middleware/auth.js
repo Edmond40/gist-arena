@@ -6,9 +6,11 @@ export function authRequired(req, res, next) {
   if (!token) return res.status(401).json({ message: 'Missing token' });
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Auth payload:', payload);
     req.user = payload; // { id, role }
     next();
   } catch (e) {
+    console.error('Auth error:', e);
     return res.status(401).json({ message: 'Invalid or expired token' });
   }
 }

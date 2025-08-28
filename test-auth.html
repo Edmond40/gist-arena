@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auth Test</title>
+</head>
+<body>
+    <h1>Authentication Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        const API_BASE = '/api/v1';
+        
+        function getToken() {
+            return localStorage.getItem('token');
+        }
+        
+        function decodeJWT(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                return null;
+            }
+        }
+        
+        async function testAuth() {
+            const results = document.getElementById('results');
+            const token = getToken();
+            
+            if (!token) {
+                results.innerHTML = '<p style="color: red;">No authentication token found. Please log in first.</p>';
+                return;
+            }
+            
+            const payload = decodeJWT(token);
+            results.innerHTML = `<h3>Token Payload:</h3><pre>${JSON.stringify(payload, null, 2)}</pre>`;
+            
+            // Test a protected endpoint
+            try {
+                const response = await fetch(`${API_BASE}/bookmarks`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    results.innerHTML += `<h3>Bookmarks API Response:</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    const error = await response.text();
+                    results.innerHTML += `<h3>API Error (${response.status}):</h3><pre>${error}</pre>`;
+                }
+            } catch (error) {
+                results.innerHTML += `<h3>Request Error:</h3><pre>${error.message}</pre>`;
+            }
+        }
+        
+        testAuth();
+    </script>
+</body>
+</html>

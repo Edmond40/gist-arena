@@ -19,13 +19,18 @@ router.get('/:postId/count', async (req, res, next) => {
 router.post('/:postId', authRequired, async (req, res, next) => {
   try {
     const postId = z.coerce.number().parse(req.params.postId);
+    console.log(`Like request: userId=${req.user.id}, postId=${postId}`);
+    
     const like = await likePost(req.user.id, postId);
     // notify admins in real-time
     sendEvent('like', { postId, userId: req.user.id });
     res.status(201).json(like);
   } catch (err) {
+    console.error('Like error:', err);
     // if already liked, Prisma will throw due to PK; return 409
     if (err.code === 'P2002') return res.status(409).json({ message: 'Already liked' });
+    // if user doesn't exist, return 400
+    if (err.code === 'P2003') return res.status(400).json({ message: 'Invalid user or post' });
     next(err);
   }
 });

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        const API_BASE = '/api/v1';
+        
+        function getToken() {
+            return localStorage.getItem('token');
+        }
+        
+        async function testAPI() {
+            const results = document.getElementById('results');
+            const token = getToken();
+            
+            results.innerHTML = `<p>Token exists: ${!!token}</p>`;
+            
+            if (!token) {
+                results.innerHTML += '<p style="color: red;">No authentication token found. Please log in first.</p>';
+                return;
+            }
+            
+            try {
+                // Test likes count
+                const likesRes = await fetch(`${API_BASE}/likes/1/count`);
+                const likesData = await likesRes.json();
+                results.innerHTML += `<p>Likes count for post 1: ${JSON.stringify(likesData)}</p>`;
+                
+                // Test like post
+                const likeRes = await fetch(`${API_BASE}/likes/1`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (likeRes.ok) {
+                    const likeData = await likeRes.json();
+                    results.innerHTML += `<p style="color: green;">Like successful: ${JSON.stringify(likeData)}</p>`;
+                } else {
+                    const error = await likeRes.text();
+                    results.innerHTML += `<p style="color: red;">Like failed (${likeRes.status}): ${error}</p>`;
+                }
+                
+                // Test bookmarks list
+                const bookmarksRes = await fetch(`${API_BASE}/bookmarks`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (bookmarksRes.ok) {
+                    const bookmarksData = await bookmarksRes.json();
+                    results.innerHTML += `<p>Bookmarks: ${JSON.stringify(bookmarksData)}</p>`;
+                } else {
+                    const error = await bookmarksRes.text();
+                    results.innerHTML += `<p style="color: red;">Bookmarks failed (${bookmarksRes.status}): ${error}</p>`;
+                }
+                
+            } catch (error) {
+                results.innerHTML += `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        // Run test when page loads
+        testAPI();
+    </script>
+</body>
+</html>

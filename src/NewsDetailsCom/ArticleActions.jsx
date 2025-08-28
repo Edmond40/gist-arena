@@ -5,7 +5,6 @@ const ArticleActions = ({
   isLiked, 
   setIsLiked, 
   likeCount, 
-  setLikeCount, 
   isBookmarked, 
   setIsBookmarked, 
   handlePrint, 
@@ -15,11 +14,12 @@ const ArticleActions = ({
   shareCount,
 }) => {
   const handleLike = () => {
+    // Use the parent component's setIsLiked which handles API calls
     setIsLiked(!isLiked);
-    setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
   };
   
   const handleBookmark = () => {
+    // Use the parent component's setIsBookmarked which handles API calls
     setIsBookmarked(!isBookmarked);
   };
 

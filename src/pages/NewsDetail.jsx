@@ -93,13 +93,23 @@ function NewsDetail() {
     setIsBookmarked((prev) => {
       const next = typeof updater === 'function' ? updater(prev) : updater;
       const pid = article?.id || Number(id);
-      if (pid) {
-        if (next) {
-          BookmarksAPI.add(pid).catch(() => {});
-        } else {
-          BookmarksAPI.remove(pid).catch(() => {});
+      (async () => {
+        try {
+          if (!pid) return;
+          console.log(`${next ? 'Bookmarking' : 'Unbookmarking'} post ${pid}`);
+          
+          if (next) {
+            await BookmarksAPI.add(pid);
+          } else {
+            await BookmarksAPI.remove(pid);
+          }
+          console.log('Bookmark operation successful');
+        } catch (error) {
+          console.error('Bookmark operation failed:', error);
+          // Revert the bookmark state on error
+          setIsBookmarked(prev);
         }
-      }
+      })();
       return next;
     });
   };
@@ -112,15 +122,24 @@ function NewsDetail() {
       (async () => {
         try {
           if (!pid) return;
+          console.log(`${next ? 'Liking' : 'Unliking'} post ${pid}`);
+          
           if (next) {
             await LikesAPI.like(pid);
           } else {
             await LikesAPI.unlike(pid);
           }
+          
+          // Always refresh the count after like/unlike
           const res = await LikesAPI.count(pid);
-          if (typeof res?.count === 'number') setLikeCount(res.count);
-        } catch {
-          // ignore like errors
+          console.log('Like count response:', res);
+          if (typeof res?.count === 'number') {
+            setLikeCount(res.count);
+          }
+        } catch (error) {
+          console.error('Like operation failed:', error);
+          // Revert the like state on error
+          setIsLiked(prev);
         }
       })();
       return next;
@@ -160,10 +179,14 @@ function NewsDetail() {
       try {
         const pid = Number(id);
         if (!pid) return;
+        console.log('Loading initial like count for post:', pid);
         const res = await LikesAPI.count(pid);
-        if (!cancelled && typeof res?.count === 'number') setLikeCount(res.count);
-      } catch {
-        // ignore
+        console.log('Initial like count response:', res);
+        if (!cancelled && typeof res?.count === 'number') {
+          setLikeCount(res.count);
+        }
+      } catch (error) {
+        console.error('Failed to load initial like count:', error);
       }
     })();
     return () => { cancelled = true; };
@@ -257,19 +280,48 @@ function NewsDetail() {
     const trySchedule = () => {
       if (cancelled) return;
       const lastTs = Number(localStorage.getItem(key) || '0');
-      if (lastTs && (Date.now() - lastTs) < 24 * 60 * 60 * 1000) return; // already counted in last 24h
-      if (document.visibilityState !== 'visible') return; // tab must be visible
-      if (readingProgress < 20) return; // require deeper engagement
-      if (timer) return; // already scheduled
+      const timeSinceLastView = Date.now() - lastTs;
+      const hoursSinceLastView = timeSinceLastView / (1000 * 60 * 60);
+      
+      console.log('View count check:', {
+        postId: id,
+        lastViewedHoursAgo: hoursSinceLastView.toFixed(1),
+        readingProgress,
+        tabVisible: document.visibilityState === 'visible',
+        timerScheduled: !!timer
+      });
+      
+      if (lastTs && timeSinceLastView < 24 * 60 * 60 * 1000) {
+        console.log(`View already counted in last 24h (${hoursSinceLastView.toFixed(1)}h ago)`);
+        return;
+      }
+      if (document.visibilityState !== 'visible') {
+        console.log('Tab not visible, skipping view count');
+        return;
+      }
+      if (readingProgress < 10) { // Reduced from 20% to 10%
+        console.log(`Reading progress too low: ${readingProgress}% (need 10%)`);
+        return;
+      }
+      if (timer) {
+        console.log('View count timer already scheduled');
+        return;
+      }
+      
+      console.log('Scheduling view count increment in 3 seconds...');
       timer = setTimeout(async () => {
         try {
+          console.log('Incrementing view count for post', id);
           const res = await PostsAPI.incrementViews(Number(id));
-          if (!cancelled && res?.viewCount !== undefined) setViewCount(res.viewCount);
+          if (!cancelled && res?.viewCount !== undefined) {
+            setViewCount(res.viewCount);
+            console.log('View count updated to:', res.viewCount);
+          }
           localStorage.setItem(key, String(Date.now()));
-        } catch {
-          // ignore failures
+        } catch (error) {
+          console.error('Failed to increment views:', error);
         }
-      }, 8000);
+      }, 3000); // Reduced from 8000ms to 3000ms
     };
 
     // Attempt immediately in case conditions already met

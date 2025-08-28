@@ -1,9 +1,6 @@
 // For local development, use relative path which will be proxied by Vite
 // For production, use the full URL if it's set in environment variables, otherwise fall back to relative
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 
-  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-    ? '/api/v1' 
-    : 'https://gist-arena-production.up.railway.app/api/v1');
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api/v1';
 
 function getToken() {
   return localStorage.getItem('token');
